@@ -3,6 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RedirectController;
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+// Homepage
 Route::get('/', function () {
     return view('welcome');
 });
@@ -11,6 +18,10 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 | Redirect after login
 |--------------------------------------------------------------------------
+|
+| All logins are redirected here first. The controller will send users
+| to the correct dashboard based on role and approval status.
+|
 */
 Route::get('/redirect', [RedirectController::class, 'index'])
     ->middleware('auth')
@@ -18,28 +29,36 @@ Route::get('/redirect', [RedirectController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
-| Role-protected Dashboards
+| Role-Protected Dashboards
 |--------------------------------------------------------------------------
+|
+| These routes are only accessible by users with the correct role.
+| Provider dashboard requires approval.
+|
 */
+
+// Provider dashboard (approved only)
 Route::middleware(['auth', 'role:provider'])->group(function () {
-    Route::get('/provider/dashboard', fn () => view('provider.dashboard'));
+    Route::get('/provider/dashboard', function () {
+        return view('provider.dashboard');
+    });
 });
 
+// Customer dashboard
 Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/customer/dashboard', fn () => view('customer.dashboard'));
+    Route::get('/customer/dashboard', function () {
+        return view('customer.dashboard');
+    });
 });
 
-/*
-|--------------------------------------------------------------------------
-| Jetstream default dashboard (optional)
-|--------------------------------------------------------------------------
-*/
+// Optional: Jetstream default dashboard (not really used, but keep if needed)
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        // You can redirect to /redirect if someone tries /dashboard directly
+        return redirect('/redirect');
     })->name('dashboard');
 });
