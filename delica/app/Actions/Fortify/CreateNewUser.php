@@ -6,33 +6,27 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
-use Laravel\Jetstream\Jetstream;
 
 class CreateNewUser implements CreatesNewUsers
 {
-    use PasswordValidationRules;
-
     /**
-     * Validate and create a newly registered user.
-     *
-     * @param  array<string, string>  $input
+     * Validate and create a new user.
      */
-    public function create(array $input): User
+    public function create(array $input)
     {
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => $this->passwordRules(),
-            'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
+            'password' => ['required', 'string', 'min:8', 'confirmed'], // ← fixed
+            'role' => ['required', 'in:customer,provider'], // validate role
         ])->validate();
 
         return User::create([
-    'name' => $input['name'],
-    'email' => $input['email'],
-    'password' => Hash::make($input['password']),
-    'role' => $input['role'],
-    'is_approved' => $input['role'] === 'provider' ? false : true,
-]);
-
+            'name' => $input['name'],
+            'email' => $input['email'],
+            'password' => Hash::make($input['password']),
+            'role' => $input['role'],      // save selected role
+            'is_approved' => false,        // default for provider
+        ]);
     }
 }
