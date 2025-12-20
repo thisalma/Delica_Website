@@ -18,14 +18,15 @@ Route::get('/redirect', [RedirectController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
-| Role-based Dashboards
+| Role-protected Dashboards
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:provider'])->group(function () {
+    Route::get('/provider/dashboard', fn () => view('provider.dashboard'));
+});
 
-    Route::view('/provider/dashboard', 'provider.dashboard');
-    Route::view('/customer/dashboard', 'customer.dashboard');
-
+Route::middleware(['auth', 'role:customer'])->group(function () {
+    Route::get('/customer/dashboard', fn () => view('customer.dashboard'));
 });
 
 /*
