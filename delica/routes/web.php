@@ -52,6 +52,15 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
     })->name('customer.dashboard');
 });
 
+Route::middleware(['auth', 'role:customer'])->group(function () {
+    Route::get('/customer/dashboard', fn () => view('customer.dashboard'));
+    Route::get('/products', fn () => 'Products Page');
+    Route::get('/cart', fn () => 'Cart Page');
+    Route::get('/orders', fn () => 'Order History Page');
+    Route::get('/profile', fn () => 'Profile Page');
+});
+
+
 //admin
 Route::middleware('auth:admin')->group(function () {
     Route::get('/dashboard', function () {
