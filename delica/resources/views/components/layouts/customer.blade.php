@@ -18,38 +18,29 @@
             </div>
 
             <!-- CENTER: NAVIGATION -->
-            <div class="hidden md:flex space-x-6 font-medium">
-                <a href="{{ url('/customer/dashboard') }}"
-                   class="hover:text-pink-100 border-b-2 border-white">
-                    Home
-                </a>
+           <div class="hidden md:flex items-center space-x-10 font-semibold text-sm tracking-wide">
 
-                <a href="{{ url('/products') }}"
-                   class="hover:text-pink-100">
-                    Products
-                </a>
+               <a href="{{ url('/customer/dashboard') }}"
+   class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">
+    Home
+</a>
 
-                <a href="{{ url('/cart') }}"
-                   class="hover:text-pink-100">
-                    Cart
-                </a>
 
-                <a href="{{ url('/orders') }}"
-                   class="hover:text-pink-100">
-                    Order History
-                </a>
+                <a href="{{ url('/products') }}" class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">Products</a>
 
-                <a href="{{ url('/profile') }}"
-                   class="hover:text-pink-100">
-                    Profile
-                </a>
+<a href="{{ url('/cart') }}" class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">Cart</a>
+
+<a href="{{ url('/orders') }}" class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">Order History</a>
+
+<a href="{{ url('/profile') }}" class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">Profile</a>
+
             </div>
 
             <!-- RIGHT: LOGOUT -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button
-                    class="bg-white text-pink-500 px-4 py-1 rounded font-semibold hover:bg-pink-100 transition">
+                    class="bg-pink text-pink-500 px-4 py-1 rounded font-semibold hover:bg-pink-100 transition">
                     Logout
                 </button>
             </form>
