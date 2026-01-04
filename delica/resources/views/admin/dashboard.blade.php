@@ -12,7 +12,7 @@
     <!-- Sidebar -->
     <aside class="bg-pink-600 text-white w-64 flex-shrink-0 min-h-screen p-6 flex flex-col">
         <div class="flex items-center gap-2 mb-8">
-            <img src="{{ asset('assets/LOGO.png') }}" alt="Delica Logo" class="w-12 h-12 rounded-full">
+            <img src="{{ asset('images/LOGO.png') }}" alt="Delica Logo" class="w-12 h-12 rounded-full">
             <span class="text-2xl font-bold">DELICA</span>
         </div>
         
