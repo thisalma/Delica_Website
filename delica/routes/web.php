@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\ProviderController;
 
 
 /*
@@ -71,6 +72,13 @@ Route::prefix('admin')->group(function () {
 
             Route::get('/customers', [CustomerController::class, 'index'])
             ->name('admin.customers');
+
+             // Providers list
+    Route::get('/providers', [ProviderController::class, 'index'])->name('admin.providers');
+
+    // Approve / Decline actions
+    Route::get('/providers/{id}/approve', [ProviderController::class, 'approve'])->name('admin.providers.approve');
+    Route::get('/providers/{id}/decline', [ProviderController::class, 'decline'])->name('admin.providers.decline');
     });
 });
 
