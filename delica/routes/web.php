@@ -5,6 +5,7 @@ use App\Http\Controllers\RedirectController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ProviderController;
+use App\Http\Controllers\Provider\DashboardController;
 
 
 /*
