@@ -73,12 +73,10 @@ Route::prefix('admin')->group(function () {
             Route::get('/customers', [CustomerController::class, 'index'])
             ->name('admin.customers');
 
-             // Providers list
+             // Providers
     Route::get('/providers', [ProviderController::class, 'index'])->name('admin.providers');
-
-    // Approve / Decline actions
-    Route::get('/providers/{id}/approve', [ProviderController::class, 'approve'])->name('admin.providers.approve');
-    Route::get('/providers/{id}/decline', [ProviderController::class, 'decline'])->name('admin.providers.decline');
+    Route::get('/providers/approve/{id}', [ProviderController::class, 'approve'])->name('admin.providers.approve');
+    Route::get('/providers/decline/{id}', [ProviderController::class, 'decline'])->name('admin.providers.decline');
     });
 });
 

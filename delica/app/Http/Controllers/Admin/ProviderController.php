@@ -4,17 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class ProviderController extends Controller
 {
-    // List all providers
+    // Show all providers
     public function index()
     {
-        $providers = User::where('role', 'provider')->orderBy('created_at', 'desc')->get();
+        $providers = User::where('role', 'provider')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('admin.providers.index', compact('providers'));
     }
 
-    // Approve provider
+    // Approve a provider
     public function approve($id)
     {
         $provider = User::findOrFail($id);
@@ -24,7 +28,7 @@ class ProviderController extends Controller
         return redirect()->route('admin.providers')->with('success', 'Provider approved successfully.');
     }
 
-    // Decline provider
+    // Decline a provider
     public function decline($id)
     {
         $provider = User::findOrFail($id);

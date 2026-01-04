@@ -1,4 +1,4 @@
-@extends('admin.layouts.app') {{-- We'll create a layout for admin later --}}
+@extends('admin.layouts.app') {{-- We'll make a master layout next --}}
 
 @section('content')
 <h1 class="text-3xl font-bold text-gray-800 mb-6">Provider Management</h1>
@@ -10,7 +10,7 @@
 @endif
 
 <div class="overflow-x-auto">
-    <table class="min-w-full bg-white rounded-xl shadow">
+    <table class="min-w-full bg-white rounded-xl shadow overflow-hidden">
         <thead class="bg-pink-600 text-white">
             <tr>
                 <th class="py-2 px-4 text-left">Name</th>
