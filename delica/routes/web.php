@@ -66,6 +66,9 @@ Route::prefix('admin')->group(function () {
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', fn () => view('admin.dashboard'))
             ->name('admin.dashboard');
+
+            Route::get('/customers', [CustomerController::class, 'index'])
+            ->name('admin.customers');
     });
 });
 
