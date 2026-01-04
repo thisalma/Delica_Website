@@ -17,12 +17,8 @@ Route::get('/', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Redirect after login
+| Redirect After Login (Customer / Provider)
 |--------------------------------------------------------------------------
-|
-| All logins are redirected here first. The controller will send users
-| to the correct dashboard based on role and approval status.
-|
 */
 Route::get('/redirect', [RedirectController::class, 'index'])
     ->middleware('auth')
@@ -30,66 +26,58 @@ Route::get('/redirect', [RedirectController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
-| Role-Protected Dashboards
+| Customer Routes
 |--------------------------------------------------------------------------
-|
-| These routes are only accessible by users with the correct role.
-| Provider dashboard requires approval.
-|
 */
-
-// Provider dashboard (approved only)
-Route::middleware(['auth', 'role:provider'])->group(function () {
-    Route::get('/provider/dashboard', function () {
-        return view('provider.dashboard');
-    })->name('provider.dashboard');
-});
-
-// Customer dashboard
 Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/customer/dashboard', function () {
-        return view('customer.dashboard');
-    })->name('customer.dashboard');
-});
+    Route::get('/customer/dashboard', fn () => view('customer.dashboard'))
+        ->name('customer.dashboard');
 
-Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/customer/dashboard', fn () => view('customer.dashboard'));
     Route::get('/products', fn () => 'Products Page');
     Route::get('/cart', fn () => 'Cart Page');
     Route::get('/orders', fn () => 'Order History Page');
     Route::get('/profile', fn () => 'Profile Page');
 });
 
-
-//admin
-Route::middleware('auth:admin')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
+/*
+|--------------------------------------------------------------------------
+| Provider Routes (Approved Only)
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'role:provider'])->group(function () {
+    Route::get('/provider/dashboard', fn () => view('provider.dashboard'))
+        ->name('provider.dashboard');
 });
 
+/*
+|--------------------------------------------------------------------------
+| Admin Routes (SEPARATE AUTH SYSTEM)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('admin')->group(function () {
 
-// Optional: Jetstream default dashboard (not really used, but keep if needed)
+    // Admin login
+    Route::get('/login', [LoginController::class, 'showLoginForm'])
+        ->name('admin.login');
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout']);
+
+    // Admin protected pages
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', fn () => view('admin.dashboard'))
+            ->name('admin.dashboard');
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Jetstream Default Dashboard (Fallback Only)
+|--------------------------------------------------------------------------
+*/
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        // You can redirect to /redirect if someone tries /dashboard directly
-        return redirect('/redirect');
-    })->name('dashboard');
-});
-
-Route::prefix('admin')->group(function () {
-
-    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [LoginController::class, 'login']);
-    Route::post('/logout', [LoginController::class, 'logout']);
-
-    Route::middleware('auth:admin')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        });
-    });
-});
+])->get('/dashboard', function () {
+    return redirect('/redirect');
+})->name('dashboard');
