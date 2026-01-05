@@ -2,10 +2,10 @@
     <div class="min-h-screen bg-gray-10 flex flex-col">
 
         <!-- PAGE HEADER -->
-        <div class="max-w-7xl mx-auto px-6 py-8 text-center">
-            <h1 class="text-3xl font-bold text-pink-600 mb-2">Our Products</h1>
-           
-        </div>
+        <div class="max-w-7xl mx-auto px-6 py-6 text-center mt-4">
+    <h1 class="text-3xl font-bold text-pink-600 mb-2">Our Products</h1>
+    
+</div>
 
         <!-- PRODUCTS GRID -->
         <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
