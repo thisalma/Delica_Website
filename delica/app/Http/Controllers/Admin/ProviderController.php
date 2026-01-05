@@ -22,7 +22,7 @@ class ProviderController extends Controller
     public function approve($id)
     {
         $provider = User::findOrFail($id);
-        $provider->approved = true;
+        $provider->is_approved = 1;
         $provider->save();
 
         return redirect()->route('admin.providers')->with('success', 'Provider approved successfully.');
@@ -32,7 +32,7 @@ class ProviderController extends Controller
     public function decline($id)
     {
         $provider = User::findOrFail($id);
-        $provider->approved = false;
+        $provider->is_approved = 0;
         $provider->save();
 
         return redirect()->route('admin.providers')->with('success', 'Provider declined.');

@@ -24,9 +24,9 @@
             <tr class="{{ $p->approved ? 'bg-gray-50' : '' }}">
                 <td class="py-2 px-4">{{ $p->name }}</td>
                 <td class="py-2 px-4">{{ $p->email }}</td>
-                <td class="py-2 px-4">{{ $p->approved ? 'Approved' : 'Pending' }}</td>
+                <td class="py-2 px-4">{{ $p->is_approved ? 'Approved' : 'Pending' }}</td>
                 <td class="py-2 px-4">
-                    @if(!$p->approved)
+                    @if(!$p->is_approved)
                         <a href="{{ route('admin.providers.approve', $p->id) }}" class="text-green-600 hover:underline">Approve</a> | 
                         <a href="{{ route('admin.providers.decline', $p->id) }}" class="text-red-600 hover:underline">Decline</a>
                     @else
