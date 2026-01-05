@@ -15,7 +15,7 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        if(!$user->approved) {
+        if(!$user->is_approved) {
             return view('provider.pending');
         }
 
