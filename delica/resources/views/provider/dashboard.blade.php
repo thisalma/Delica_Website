@@ -24,7 +24,10 @@
 
     <div class="bg-white p-5 rounded shadow">
         <p class="text-gray-500">Account Status</p>
-        <h2 class="text-xl font-bold text-green-600">Approved</h2>
+        <h2 class="text-xl font-bold {{ auth()->user()->is_approved ? 'text-green-600' : 'text-yellow-500' }}">
+    {{ auth()->user()->is_approved ? 'Approved' : 'Pending' }}
+</h2>
+
     </div>
 
 </div>
