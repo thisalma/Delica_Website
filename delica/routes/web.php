@@ -49,7 +49,7 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'role:provider'])->group(function () {
-    Route::get('/provider/dashboard', fn () => view('provider.dashboard'))
+    Route::get('/provider/dashboard', [DashboardController::class, 'index'])
         ->name('provider.dashboard');
 });
 
