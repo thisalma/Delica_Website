@@ -39,8 +39,8 @@ class DashboardController extends Controller
             $total = OrderItem::join('products', 'order_items.product_id', '=', 'products.id')
                 ->join('orders', 'order_items.order_id', '=', 'orders.id')
                 ->where('products.created_by', $user->id)
-                ->whereMonth('orders.order_date', Carbon::parse($month.'-01')->month)
-                ->whereYear('orders.order_date', Carbon::parse($month.'-01')->year)
+                ->whereMonth('orders.created_at', Carbon::parse($month.'-01')->month)
+                ->whereYear('orders.created_at', Carbon::parse($month.'-01')->year)
                 ->selectRaw('SUM(order_items.quantity * products.price) as total_sales')
                 ->value('total_sales') ?? 0;
 

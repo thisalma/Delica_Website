@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ProviderController;
 use App\Http\Controllers\Provider\DashboardController;
+use App\Http\Controllers\Provider\ProductController;
+use App\Http\Controllers\Provider\OrderController;
 
 
 /*
@@ -51,6 +53,12 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
 Route::middleware(['auth', 'role:provider'])->group(function () {
     Route::get('/provider/dashboard', [DashboardController::class, 'index'])
         ->name('provider.dashboard');
+
+         // Products
+    Route::resource('products', ProductController::class);
+
+     // Orders
+    Route::get('/orders', [OrderController::class, 'index'])->name('provider.orders');
 });
 
 /*
