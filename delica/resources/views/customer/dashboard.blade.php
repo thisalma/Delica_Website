@@ -1,10 +1,8 @@
 <x-layouts.customer>
     <div class="min-h-screen bg-gray-50 flex flex-col">
 
-        <!-- MAIN CONTENT -->
-        <main class="max-w-7xl mx-auto px-6 py-8 flex-grow">
-
-            <!-- LOGO + WELCOME -->
+        <!-- LOGO + WELCOME (CENTERED) -->
+        <div class="max-w-7xl mx-auto px-6 py-8">
             <div class="flex flex-col items-center justify-center mb-8">
                 <img src="{{ asset('images/LOGO.png') }}"
                      class="w-28 h-28 object-contain rounded-full shadow-md mb-3"
@@ -14,16 +12,20 @@
                 </h1>
                 <p class="mt-2 text-gray-700">Welcome to your customer dashboard!</p>
             </div>
+        </div>
 
-            <!-- BANNER -->
-            <div class="mt-8">
-                <img src="{{ asset('images/banner_new.png') }}"
-                     class="w-full h-full object-cover rounded-xl shadow-md"
-                     alt="Promotional Banner">
-            </div>
+        <!-- 🔥 FULL WIDTH BANNER -->
+        <div class="w-full">
+            <img src="{{ asset('images/banner_new.png') }}"
+                 class="w-full h-[420px] object-cover"
+                 alt="Promotional Banner">
+        </div>
+
+        <!-- MAIN CONTENT (CENTERED AGAIN) -->
+        <main class="max-w-7xl mx-auto px-6 py-12 flex-grow">
 
             <!-- GLOBAL JOURNEY -->
-            <div class="mt-14 text-center">
+            <div class="text-center">
                 <h2 class="text-3xl font-bold text-pink-600 tracking-wide">
                     Our Global Journey
                 </h2>
@@ -89,10 +91,9 @@
                 </div>
             </div>
 
-            <div class="mt-32"></div>
         </main>
 
-        <!-- FOOTER (FULL WIDTH) -->
+        <!-- FOOTER -->
         <footer class="bg-pink-600 text-white w-full py-12 px-8">
             <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
 
@@ -119,12 +120,6 @@
                     <h3 class="text-xl font-semibold mb-3">Contact Us</h3>
                     <p class="text-gray-100 mb-3">Email: support@delica.com</p>
                     <p class="text-gray-100 mb-4">Phone: +94 76 123 4567</p>
-
-                    <div class="flex space-x-4 mt-4">
-                        <a href="#" class="hover:text-white"><x-icons.facebook /></a>
-                        <a href="#" class="hover:text-white"><x-icons.instagram /></a>
-                        <a href="#" class="hover:text-white"><x-icons.tiktok /></a>
-                    </div>
                 </div>
 
             </div>
