@@ -35,15 +35,15 @@ Route::get('/redirect', [RedirectController::class, 'index'])
 | Customer Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/customer/dashboard', fn () => view('customer.dashboard'))
-        ->name('customer.dashboard');
+Route::prefix('customer')->middleware(['auth', 'role:customer'])->group(function () {
+    Route::get('/dashboard', fn () => view('customer.dashboard'))->name('customer.dashboard');
 
-    Route::get('/products', fn () => 'Products Page');
-    Route::get('/cart', fn () => 'Cart Page');
-    Route::get('/orders', fn () => 'Order History Page');
-    Route::get('/profile', fn () => 'Profile Page');
+    Route::get('/products', fn () => 'Products Page')->name('customer.products');
+    Route::get('/cart', fn () => 'Cart Page')->name('customer.cart');
+    Route::get('/orders', fn () => 'Order History Page')->name('customer.orders');
+    Route::get('/profile', fn () => 'Profile Page')->name('customer.profile');
 });
+
 
 /*
 |--------------------------------------------------------------------------
