@@ -38,7 +38,7 @@
 
                 <!-- LEFT BOX -->
                 <div class="bg-white shadow-lg p-6 rounded-xl flex gap-5 items-start">
-                    <img src="{{ asset('assets/smallpic.png') }}" 
+                    <img src="{{ asset('images/smallpic.png') }}" 
                          class="h-full w-28 object-cover rounded-lg shadow-md" 
                          alt="Authenticity">
 
