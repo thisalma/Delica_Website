@@ -1,10 +1,10 @@
 <x-layouts.customer>
-    <div class="min-h-screen bg-gray-50 flex flex-col">
+    <div class="min-h-screen bg-gray-10 flex flex-col">
 
         <!-- PAGE HEADER -->
         <div class="max-w-7xl mx-auto px-6 py-8 text-center">
             <h1 class="text-3xl font-bold text-pink-600 mb-2">Our Products</h1>
-            <p class="text-gray-700">Browse all products added by our trusted providers</p>
+           
         </div>
 
         <!-- PRODUCTS GRID -->
