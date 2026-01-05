@@ -44,6 +44,10 @@ Route::prefix('customer')->middleware(['auth', 'role:customer'])->group(function
         ->name('customer.products');
 
     Route::get('/cart', fn () => 'Cart Page')->name('customer.cart');
+
+     // Add to cart
+    Route::post('/cart/add/{product}', [App\Http\Controllers\Customer\CartController::class, 'add'])
+        ->name('customer.cart.add');
     Route::get('/orders', fn () => 'Order History Page')->name('customer.orders');
     Route::get('/profile', fn () => 'Profile Page')->name('customer.profile');
 
