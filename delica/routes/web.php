@@ -36,13 +36,19 @@ Route::get('/redirect', [RedirectController::class, 'index'])
 |--------------------------------------------------------------------------
 */
 Route::prefix('customer')->middleware(['auth', 'role:customer'])->group(function () {
-    Route::get('/dashboard', fn () => view('customer.dashboard'))->name('customer.dashboard');
 
-    Route::get('/products', fn () => 'Products Page')->name('customer.products');
+    Route::get('/dashboard', fn () => view('customer.dashboard'))
+        ->name('customer.dashboard');
+
+    Route::get('/products', [App\Http\Controllers\Customer\ProductController::class, 'index'])
+        ->name('customer.products');
+
     Route::get('/cart', fn () => 'Cart Page')->name('customer.cart');
     Route::get('/orders', fn () => 'Order History Page')->name('customer.orders');
     Route::get('/profile', fn () => 'Profile Page')->name('customer.profile');
+
 });
+
 
 
 /*

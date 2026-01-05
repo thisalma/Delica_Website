@@ -20,21 +20,32 @@
             <!-- CENTER: NAVIGATION -->
            <div class="hidden md:flex items-center space-x-10 font-semibold text-sm tracking-wide">
 
-               <a href="{{ url('/customer/dashboard') }}"
-   class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">
-    Home
-</a>
+    <a href="{{ route('customer.dashboard') }}"
+       class="px-3 py-2 hover:text-pink-100 border-b-2 border-transparent hover:border-white">
+        Home
+    </a>
 
+    <a href="{{ route('customer.products') }}"
+       class="px-3 py-2 hover:text-pink-100 border-b-2 border-transparent hover:border-white">
+        Products
+    </a>
 
-                <a href="{{ url('/products') }}" class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">Products</a>
+    <a href="{{ route('customer.cart') }}"
+       class="px-3 py-2 hover:text-pink-100 border-b-2 border-transparent hover:border-white">
+        Cart
+    </a>
 
-<a href="{{ url('/cart') }}" class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">Cart</a>
+    <a href="{{ route('customer.orders') }}"
+       class="px-3 py-2 hover:text-pink-100 border-b-2 border-transparent hover:border-white">
+        Order History
+    </a>
 
-<a href="{{ url('/orders') }}" class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">Order History</a>
+    <a href="{{ route('customer.profile') }}"
+       class="px-3 py-2 hover:text-pink-100 border-b-2 border-transparent hover:border-white">
+        Profile
+    </a>
 
-<a href="{{ url('/profile') }}" class="px-3 py-2 hover:text-pink-100 transition border-b-2 border-transparent hover:border-white">Profile</a>
-
-            </div>
+</div>
 
             <!-- RIGHT: LOGOUT -->
             <form method="POST" action="{{ route('logout') }}">
