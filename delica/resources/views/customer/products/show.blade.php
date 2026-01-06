@@ -1,6 +1,15 @@
 <x-layouts.customer>
     <div class="bg-gray-100 min-h-screen py-10">
 
+        <!-- BACK LINK OUTSIDE THE WHITE CARD -->
+        <div class="max-w-6xl mx-auto mb-4 px-6">
+            <a href="{{ route('customer.products') }}"
+               class="inline-flex items-center text-sm font-semibold text-pink-600 hover:underline">
+                ← Back to Products
+            </a>
+        </div>
+
+        <!-- PRODUCT DETAIL CARD -->
         <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
 
             <!-- PRODUCT IMAGE -->
@@ -36,11 +45,6 @@
                     </button>
                 </form>
 
-                <!-- BACK -->
-                <a href="{{ route('customer.products') }}"
-                   class="inline-block mt-4 text-sm text-pink-600 hover:underline">
-                    ← Back to Products
-                </a>
             </div>
 
         </div>
