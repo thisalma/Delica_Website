@@ -43,6 +43,10 @@ Route::prefix('customer')->middleware(['auth', 'role:customer'])->group(function
     Route::get('/products', [App\Http\Controllers\Customer\ProductController::class, 'index'])
         ->name('customer.products');
 
+        Route::get('/customer/products/{product}', 
+    [App\Http\Controllers\Customer\ProductController::class, 'show']
+)->name('customer.products.show');
+
     Route::get('/cart', fn () => 'Cart Page')->name('customer.cart');
 
      // Add to cart

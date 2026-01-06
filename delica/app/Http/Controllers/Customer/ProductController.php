@@ -40,4 +40,10 @@ class ProductController extends Controller
             'pageTitle'
         ));
     }
+
+    public function show(Product $product)
+{
+    return view('customer.products.show', compact('product'));
+}
+
 }

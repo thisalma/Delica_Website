@@ -44,12 +44,17 @@
                 @forelse($products as $product)
                     <div class="bg-white rounded shadow hover:shadow-lg transition p-3">
 
-                        <img src="{{ asset('storage/'.$product->image) }}"
-                             class="w-full h-32 sm:h-40 object-cover rounded mb-2">
+                        <a href="{{ route('customer.products.show', $product->id) }}">
+    <img src="{{ asset('storage/'.$product->image) }}"
+         class="w-full h-32 sm:h-40 object-cover rounded mb-2">
+</a>
 
-                        <h2 class="text-sm font-semibold truncate">
-                            {{ $product->name }}
-                        </h2>
+<h2 class="text-sm font-semibold truncate">
+    <a href="{{ route('customer.products.show', $product->id) }}"
+       class="hover:text-pink-600">
+        {{ $product->name }}
+    </a>
+</h2>
 
                         <p class="text-pink-600 font-bold text-sm">
                             LKR {{ number_format($product->price, 2) }}
