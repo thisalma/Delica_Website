@@ -1,36 +1,77 @@
 <x-layouts.customer>
-    <div class="min-h-screen bg-gray-10 flex flex-col">
+    <div class="bg-gray-100 min-h-screen">
 
-        <!-- PAGE HEADER -->
-        <div class="max-w-7xl mx-auto px-6 py-6 text-center mt-4">
-    <h1 class="text-3xl font-bold text-pink-600 mb-2">Our Products</h1>
-    
-</div>
+        <!-- SEARCH BAR -->
+        <div class="bg-white px-4 py-4 shadow">
+            <form method="GET" action="{{ route('customer.products') }}"
+                  class="flex max-w-3xl mx-auto">
 
-        <!-- PRODUCTS GRID -->
-        <main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                @if($category)
+                    <input type="hidden" name="category" value="{{ $category }}">
+                @endif
 
-            @forelse($products as $product)
-                <div class="bg-white shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition duration-300">
-                    <img src="{{ asset('storage/'.$product->image) }}" 
-                         class="w-full h-48 object-cover" 
-                         alt="{{ $product->name }}">
+                <input type="text"
+                       name="search"
+                       value="{{ $search }}"
+                       placeholder="Search products..."
+                       class="flex-1 px-4 py-3 border border-gray-300 rounded-l
+                              focus:ring-2 focus:ring-pink-500 focus:outline-none">
 
-                    <div class="p-5">
-                        <h3 class="text-xl font-bold text-pink-600">{{ $product->name }}</h3>
-                        <p class="text-gray-700 mt-2">{{ Str::limit($product->description, 60) }}</p>
-                        <p class="text-gray-900 font-semibold mt-2">LKR {{ number_format($product->price, 2) }}</p>
+                <button
+                    class="bg-pink-600 hover:bg-pink-700 text-white px-6 rounded-r font-semibold">
+                    Search
+                </button>
+            </form>
+        </div>
 
-                        <a href="{{ route('customer.cart.add', $product->id) }}"
-                           class="mt-4 inline-block w-full text-center bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 rounded-lg transition duration-300">
-                            Add to Cart
-                        </a>
+        <!-- CONTENT -->
+        <div class="max-w-7xl mx-auto px-6 py-6">
+
+            <h1 class="text-xl font-bold text-pink-600 mb-2">
+                {{ $pageTitle }}
+            </h1>
+
+            @if($search || $category)
+                <a href="{{ route('customer.products') }}"
+                   class="inline-block mb-4 text-sm text-pink-600 font-semibold hover:underline">
+                    ← Back to All Products
+                </a>
+            @endif
+
+            <!-- PRODUCTS GRID -->
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+
+                @forelse($products as $product)
+                    <div class="bg-white rounded shadow hover:shadow-lg transition p-3">
+
+                        <img src="{{ asset('storage/'.$product->image) }}"
+                             class="w-full h-32 sm:h-40 object-cover rounded mb-2">
+
+                        <h2 class="text-sm font-semibold truncate">
+                            {{ $product->name }}
+                        </h2>
+
+                        <p class="text-pink-600 font-bold text-sm">
+                            LKR {{ number_format($product->price, 2) }}
+                        </p>
+
+                        <form method="POST"
+                              action="{{ route('customer.cart.add', $product->id) }}">
+                            @csrf
+                            <button
+                                class="mt-2 w-full bg-pink-600 hover:bg-pink-700 text-white py-1 rounded text-sm">
+                                Add to Cart
+                            </button>
+                        </form>
+
                     </div>
-                </div>
-            @empty
-                <p class="text-gray-700 col-span-full text-center">No products available yet.</p>
-            @endforelse
+                @empty
+                    <p class="text-gray-600 col-span-full">
+                        No products found.
+                    </p>
+                @endforelse
 
-        </main>
+            </div>
+        </div>
     </div>
 </x-layouts.customer>
