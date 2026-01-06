@@ -1,8 +1,8 @@
 <x-layouts.customer>
-    <div class="bg-gray-100 min-h-screen py-10">
+    <div class="bg-gray-100 min-h-screen pt-4">
 
         <!-- BACK LINK OUTSIDE THE WHITE CARD -->
-        <div class="max-w-6xl mx-auto mb-4 px-6">
+        <div class="max-w-6xl mx-auto px-6 mb-6"> 
             <a href="{{ route('customer.products') }}"
                class="inline-flex items-center text-sm font-semibold text-pink-600 hover:underline">
                 ← Back to Products
