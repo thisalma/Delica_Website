@@ -28,6 +28,7 @@ use App\Http\Controllers\Provider\OrderController;
 */
 use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\Customer\CartController;
+use App\Http\Controllers\Customer\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,13 +57,14 @@ Route::get('/redirect', [RedirectController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
-| Customer Routes
+| Customer Routes (SESSION AUTH — NOT SANCTUM)
 |--------------------------------------------------------------------------
 */
 Route::prefix('customer')
     ->middleware(['auth', 'role:customer'])
     ->group(function () {
 
+        // Dashboard
         Route::get('/dashboard', fn () => view('customer.dashboard'))
             ->name('customer.dashboard');
 
@@ -73,7 +75,7 @@ Route::prefix('customer')
         Route::get('/products/{product}', [CustomerProductController::class, 'show'])
             ->name('customer.products.show');
 
-        // 🛒 CART (Livewire)
+        // 🛒 Cart (Livewire Page Component)
         Route::get('/cart', CartPage::class)
             ->name('customer.cart');
 
@@ -81,12 +83,16 @@ Route::prefix('customer')
         Route::post('/cart/add/{product}', [CartController::class, 'add'])
             ->name('customer.cart.add');
 
-        // Orders & Profile
+        // Orders
         Route::get('/orders', fn () => 'Order History Page')
             ->name('customer.orders');
 
-        Route::get('/profile', fn () => 'Profile Page')
+        // 👤 Profile (WEB — SESSION AUTH)
+        Route::get('/profile', [ProfileController::class, 'index'])
             ->name('customer.profile');
+
+        Route::post('/profile', [ProfileController::class, 'update'])
+            ->name('customer.profile.update');
     });
 
 /*
@@ -139,7 +145,7 @@ Route::prefix('admin')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])
         ->name('admin.logout');
 
-    // Protected
+    // Protected Admin Routes
     Route::middleware('auth:admin')->group(function () {
 
         Route::get('/dashboard', fn () => view('admin.dashboard'))

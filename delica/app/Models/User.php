@@ -18,7 +18,7 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
 
     /**
-     * The attributes that are mass assignable.
+     * Mass assignable attributes
      */
     protected $fillable = [
         'name',
@@ -29,7 +29,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden.
+     * Hidden attributes
      */
     protected $hidden = [
         'password',
@@ -39,14 +39,14 @@ class User extends Authenticatable
     ];
 
     /**
-     * The accessors to append.
+     * Appended attributes
      */
     protected $appends = [
         'profile_photo_url',
     ];
 
     /**
-     * Attribute casting.
+     * Attribute casting
      */
     protected function casts(): array
     {
@@ -63,8 +63,15 @@ class User extends Authenticatable
     |--------------------------------------------------------------------------
     */
 
+    // 🛒 One customer has ONE cart
     public function cart()
     {
         return $this->hasOne(\App\Models\Cart::class);
+    }
+
+    // 📦 One customer has MANY orders
+    public function orders()
+    {
+        return $this->hasMany(\App\Models\Order::class, 'user_id');
     }
 }
