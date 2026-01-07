@@ -10,25 +10,13 @@ use App\Models\Product;
 class CartController extends Controller
 {
     /**
-     * Display all items in the authenticated user's cart
+     * Redirect user to cart page
+     * (Livewire handles displaying cart data)
      */
-    public function index(Request $request)
+    public function index()
     {
-        $user = $request->user();
-
-        // Get or create cart
-        $cart = $user->cart ?? $user->cart()->create();
-
-        // Load items with product details
-        $items = $cart->items()->with('product')->get();
-
-        // Calculate total
-        $total = $items->sum(fn($i) => $i->product->price * $i->quantity);
-
-        return response()->json([
-            'items' => $items,
-            'total' => $total,
-        ]);
+        return view('customer.cart'); 
+        // This view ONLY contains <livewire:cart-page />
     }
 
     /**
@@ -44,32 +32,34 @@ class CartController extends Controller
         // Add product or increment quantity
         $item = $cart->items()->firstOrCreate(
             ['product_id' => $product->id],
-            ['quantity' => 0]
+            ['quantity' => 0, 'selected' => true]
         );
+
         $item->increment('quantity');
 
-        return response()->json(['message' => 'Product added to cart', 'item' => $item]);
+        // Redirect to cart page
+        return redirect()
+            ->route('customer.cart')
+            ->with('success', $product->name . ' added to cart!');
     }
 
     /**
-     * Remove a product from the authenticated user's cart
+     * Remove a product from the cart (non-Livewire fallback)
      */
     public function remove(Request $request, Product $product)
     {
-        $user = $request->user();
-        $cart = $user->cart;
+        $cart = $request->user()->cart;
 
         if (!$cart) {
-            return response()->json(['message' => 'Cart is empty'], 400);
+            return redirect()->route('customer.cart');
         }
 
-        $item = $cart->items()->where('product_id', $product->id)->first();
+        $cart->items()
+            ->where('product_id', $product->id)
+            ->delete();
 
-        if ($item) {
-            $item->delete();
-            return response()->json(['message' => 'Product removed from cart']);
-        }
-
-        return response()->json(['message' => 'Product not in cart'], 404);
+        return redirect()
+            ->route('customer.cart')
+            ->with('success', 'Product removed from cart.');
     }
 }
