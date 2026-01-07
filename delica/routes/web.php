@@ -83,6 +83,9 @@ Route::prefix('customer')
         Route::post('/cart/add/{product}', [CartController::class, 'add'])
             ->name('customer.cart.add');
 
+            Route::get('/checkout', [CheckoutController::class, 'index'])->name('customer.checkout')->middleware('auth');
+
+
         // Orders
         Route::get('/orders', fn () => 'Order History Page')
             ->name('customer.orders');
