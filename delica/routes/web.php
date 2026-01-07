@@ -29,6 +29,7 @@ use App\Http\Controllers\Provider\OrderController;
 use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\ProfileController;
+use App\Http\Controllers\Customer\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +58,7 @@ Route::get('/redirect', [RedirectController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
-| Customer Routes (SESSION AUTH — NOT SANCTUM)
+| Customer Routes (SESSION AUTH)
 |--------------------------------------------------------------------------
 */
 Route::prefix('customer')
@@ -75,7 +76,7 @@ Route::prefix('customer')
         Route::get('/products/{product}', [CustomerProductController::class, 'show'])
             ->name('customer.products.show');
 
-        // 🛒 Cart (Livewire Page Component)
+        // 🛒 Cart (Livewire)
         Route::get('/cart', CartPage::class)
             ->name('customer.cart');
 
@@ -83,14 +84,18 @@ Route::prefix('customer')
         Route::post('/cart/add/{product}', [CartController::class, 'add'])
             ->name('customer.cart.add');
 
-            Route::get('/checkout', [CheckoutController::class, 'index'])->name('customer.checkout')->middleware('auth');
+       Route::middleware(['auth'])->group(function () {
+    Route::get('/checkout', function () {
+        return view('customer.checkout');
+    })->name('customer.checkout');
+});
 
 
         // Orders
         Route::get('/orders', fn () => 'Order History Page')
             ->name('customer.orders');
 
-        // 👤 Profile (WEB — SESSION AUTH)
+        // 👤 Profile
         Route::get('/profile', [ProfileController::class, 'index'])
             ->name('customer.profile');
 
@@ -134,12 +139,11 @@ Route::middleware(['auth', 'role:provider'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Admin Routes (Separate Guard)
+| Admin Routes
 |--------------------------------------------------------------------------
 */
 Route::prefix('admin')->group(function () {
 
-    // Login
     Route::get('/login', [LoginController::class, 'showLoginForm'])
         ->name('admin.login');
 
@@ -148,17 +152,14 @@ Route::prefix('admin')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])
         ->name('admin.logout');
 
-    // Protected Admin Routes
     Route::middleware('auth:admin')->group(function () {
 
         Route::get('/dashboard', fn () => view('admin.dashboard'))
             ->name('admin.dashboard');
 
-        // Customers
         Route::get('/customers', [CustomerController::class, 'index'])
             ->name('admin.customers');
 
-        // Providers
         Route::get('/providers', [ProviderController::class, 'index'])
             ->name('admin.providers');
 

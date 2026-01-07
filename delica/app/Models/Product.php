@@ -17,4 +17,10 @@ class Product extends Model
         'image',
         'created_by',
     ];
+
+    // A product can appear in many cart items
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class);
+    }
 }
