@@ -8,6 +8,7 @@ use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Carbon\Carbon;
 
 class CheckoutPage extends Component
 {
@@ -50,16 +51,18 @@ class CheckoutPage extends Component
         $user = Auth::user();
 
         if (!$this->items || $this->items->isEmpty()) {
-            return redirect()->route('customer.cart')
-                ->with('error', 'Your cart is empty.');
+            // ✅ Livewire v3: dispatch browser event instead of emit
+            $this->dispatch('order-error', ['message' => 'Your cart is empty!']);
+            return;
         }
 
-        // ✅ Create the order
+        // ✅ Create the order with order_date
         $order = Order::create([
             'user_id' => $user->id,
             'total_amount' => $this->subtotal + $this->deliveryFee,
             'status' => 'pending',
             'payment_method' => $this->paymentMethod,
+            'order_date' => Carbon::now(), // <-- Fix for order_date error
         ]);
 
         // ✅ Create order items
@@ -73,13 +76,17 @@ class CheckoutPage extends Component
         }
 
         // ✅ Remove cart items (not the cart)
-        $cart = $user->cart;
-        if ($cart) {
-            $cart->items()->delete();
+        if ($user->cart) {
+            $user->cart->items()->delete();
         }
 
-        return redirect()->route('customer.orders')
-            ->with('success', 'Order placed successfully 🎉');
+        // ✅ Dispatch success message for Livewire v3
+        $this->dispatch('order-placed', ['message' => 'Your order has been successfully placed! 🎉']);
+
+        // Reset payment method and subtotal
+        $this->paymentMethod = null;
+        $this->subtotal = 0;
+        $this->items = collect();
     }
 
     public function render()

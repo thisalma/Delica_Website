@@ -49,7 +49,7 @@
         <h2 class="text-2xl font-bold text-pink-600 mb-3">Payment Method</h2>
 
         <label class="flex items-center gap-2 mb-3 cursor-pointer">
-           <input type="radio" wire:model.live="paymentMethod" value="COD">
+            <input type="radio" wire:model.live="paymentMethod" value="COD">
             💵 Cash on Delivery
         </label>
 
@@ -77,10 +77,33 @@
             </div>
         @endif
 
-        <button wire:click="placeOrder" @disabled(!$paymentMethod)
+        <button wire:click="placeOrder" 
+                wire:loading.attr="disabled"
                 class="w-full mt-6 bg-pink-600 text-white py-3 rounded-xl font-bold
                        hover:bg-pink-700 transition disabled:opacity-50">
-            Place Order
+            <span wire:loading>Placing your order...</span>
+            <span wire:loading.remove>Place Order</span>
         </button>
     </div>
+
+    <!-- SUCCESS TOAST -->
+<div 
+    x-data="{ show: false, message: '' }" 
+    x-on:order-placed.window="message = $event.detail.message; show = true; setTimeout(() => show = false, 4000)"
+    x-show="show"
+    class="fixed top-5 right-5 bg-green-500 text-white px-6 py-3 rounded shadow-lg transition"
+    x-transition>
+    <span x-text="message"></span>
+</div>
+
+<!-- ERROR TOAST -->
+<div 
+    x-data="{ show: false, message: '' }" 
+    x-on:order-error.window="message = $event.detail.message; show = true; setTimeout(() => show = false, 4000)"
+    x-show="show"
+    class="fixed top-5 right-5 bg-red-500 text-white px-6 py-3 rounded shadow-lg transition"
+    x-transition>
+    <span x-text="message"></span>
+</div>
+
 </div>
