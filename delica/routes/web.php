@@ -18,8 +18,8 @@ use App\Http\Controllers\Admin\ProviderController;
 |--------------------------------------------------------------------------
 */
 use App\Http\Controllers\Provider\DashboardController;
-use App\Http\Controllers\Provider\ProductController;
-use App\Http\Controllers\Provider\OrderController;
+use App\Http\Controllers\Provider\ProductController as ProviderProductController;
+use App\Http\Controllers\Provider\OrderController as ProviderOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,7 @@ use App\Http\Controllers\Provider\OrderController;
 use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\ProfileController;
-use App\Http\Controllers\Customer\CheckoutController;
+use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +37,7 @@ use App\Http\Controllers\Customer\CheckoutController;
 |--------------------------------------------------------------------------
 */
 use App\Livewire\CartPage;
+use App\Livewire\CheckoutPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +59,7 @@ Route::get('/redirect', [RedirectController::class, 'index'])
 
 /*
 |--------------------------------------------------------------------------
-| Customer Routes (SESSION AUTH)
+| Customer Routes
 |--------------------------------------------------------------------------
 */
 Route::prefix('customer')
@@ -76,26 +77,22 @@ Route::prefix('customer')
         Route::get('/products/{product}', [CustomerProductController::class, 'show'])
             ->name('customer.products.show');
 
-        // 🛒 Cart (Livewire)
+        // Cart (Livewire)
         Route::get('/cart', CartPage::class)
             ->name('customer.cart');
 
-        // Add to cart
         Route::post('/cart/add/{product}', [CartController::class, 'add'])
             ->name('customer.cart.add');
 
-       Route::middleware(['auth'])->group(function () {
-    Route::get('/checkout', function () {
-        return view('customer.checkout');
-    })->name('customer.checkout');
-});
+        // Checkout (Livewire page view)
+        Route::get('/checkout', fn () => view('customer.checkout'))
+            ->name('customer.checkout');
 
-
-        // Orders
-        Route::get('/orders', fn () => 'Order History Page')
+        // Orders (Customer Order History)
+        Route::get('/orders', [CustomerOrderController::class, 'index'])
             ->name('customer.orders');
 
-        // 👤 Profile
+        // Profile
         Route::get('/profile', [ProfileController::class, 'index'])
             ->name('customer.profile');
 
@@ -108,34 +105,36 @@ Route::prefix('customer')
 | Provider Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'role:provider'])->group(function () {
+Route::prefix('provider')
+    ->middleware(['auth', 'role:provider'])
+    ->group(function () {
 
-    Route::get('/provider/dashboard', [DashboardController::class, 'index'])
-        ->name('provider.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])
+            ->name('provider.dashboard');
 
-    // Products
-    Route::get('/products', [ProductController::class, 'index'])
-        ->name('provider.products.index');
+        // Products
+        Route::get('/products', [ProviderProductController::class, 'index'])
+            ->name('provider.products.index');
 
-    Route::get('/products/create', [ProductController::class, 'create'])
-        ->name('provider.products.create');
+        Route::get('/products/create', [ProviderProductController::class, 'create'])
+            ->name('provider.products.create');
 
-    Route::post('/products', [ProductController::class, 'store'])
-        ->name('provider.products.store');
+        Route::post('/products', [ProviderProductController::class, 'store'])
+            ->name('provider.products.store');
 
-    Route::get('/products/{product}/edit', [ProductController::class, 'edit'])
-        ->name('provider.products.edit');
+        Route::get('/products/{product}/edit', [ProviderProductController::class, 'edit'])
+            ->name('provider.products.edit');
 
-    Route::put('/products/{product}', [ProductController::class, 'update'])
-        ->name('provider.products.update');
+        Route::put('/products/{product}', [ProviderProductController::class, 'update'])
+            ->name('provider.products.update');
 
-    Route::delete('/products/{product}', [ProductController::class, 'destroy'])
-        ->name('provider.products.destroy');
+        Route::delete('/products/{product}', [ProviderProductController::class, 'destroy'])
+            ->name('provider.products.destroy');
 
-    // Orders
-    Route::get('/orders', [OrderController::class, 'index'])
-        ->name('provider.orders');
-});
+        // Orders
+        Route::get('/orders', [ProviderOrderController::class, 'index'])
+            ->name('provider.orders');
+    });
 
 /*
 |--------------------------------------------------------------------------

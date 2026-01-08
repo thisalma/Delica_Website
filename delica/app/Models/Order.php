@@ -14,7 +14,11 @@ class Order extends Model
         'total_amount',
         'status',
         'payment_method',
-        'order_date', 
+        'order_date',
+    ];
+
+    protected $casts = [
+        'order_date' => 'datetime',
     ];
 
     public function items()
