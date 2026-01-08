@@ -13,7 +13,7 @@ class CheckoutPage extends Component
 {
     public $items;
     public $subtotal = 0;
-    public $paymentMethod = 'COD';
+    public $paymentMethod = null;
     public $deliveryFee = 250;
 
     public function mount()
