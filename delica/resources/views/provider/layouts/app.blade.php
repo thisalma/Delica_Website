@@ -16,7 +16,10 @@
 
         <nav class="flex flex-col gap-3">
             <a href="{{ route('provider.dashboard') }}" class="px-4 py-2 rounded hover:bg-pink-500 transition">Dashboard</a>
-            <a href="{{ route('products.index') }}" class="px-4 py-2 rounded hover:bg-pink-500 transition">Manage Products</a>
+            <a href="{{ route('provider.products.index') }}" class="px-4 py-2 rounded hover:bg-pink-500 transition">
+    Manage Products
+</a>
+
             <a href="{{ route('provider.orders') }}" class="px-4 py-2 rounded hover:bg-pink-500 transition">Orders</a>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

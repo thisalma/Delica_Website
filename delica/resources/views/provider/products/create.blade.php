@@ -4,9 +4,10 @@
 @section('content')
 <h1 class="text-3xl font-bold mb-6">Add Product</h1>
 
-<form method="POST" action="{{ route('products.store') }}" enctype="multipart/form-data"
+<form method="POST" action="{{ route('provider.products.store') }}" enctype="multipart/form-data"
       class="bg-white p-6 rounded shadow max-w-lg">
     @csrf
+
     <label class="block mb-2">Product Name</label>
     <input type="text" name="name" value="{{ old('name') }}"
            class="w-full p-2 border rounded mb-4" required>

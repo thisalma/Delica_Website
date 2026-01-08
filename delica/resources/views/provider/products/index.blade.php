@@ -10,7 +10,10 @@
 </div>
 @endif
 
-<a href="{{ route('products.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">+ Add Product</a>
+<a href="{{ route('provider.products.create') }}"
+   class="bg-blue-600 text-white px-4 py-2 rounded mb-4 inline-block">
+   + Add Product
+</a>
 
 <div class="overflow-x-auto bg-white shadow rounded-xl">
     <table class="min-w-full divide-y divide-gray-200">
@@ -28,21 +31,31 @@
             <tr>
                 <td class="px-4 py-2">
                     @if($product->image)
-                    <img src="{{ asset('storage/'.$product->image) }}" class="w-16 h-16 object-cover rounded">
+                        <img src="{{ asset('storage/'.$product->image) }}"
+                             class="w-16 h-16 object-cover rounded">
                     @else
-                    <span class="text-gray-500">No Image</span>
+                        <span class="text-gray-500">No Image</span>
                     @endif
                 </td>
                 <td class="px-4 py-2">{{ $product->name }}</td>
                 <td class="px-4 py-2">{{ $product->category }}</td>
                 <td class="px-4 py-2">Rs. {{ number_format($product->price, 2) }}</td>
                 <td class="px-4 py-2 space-x-2">
-                    <a href="{{ route('products.edit', $product) }}" class="text-blue-600 hover:underline">Edit</a>
-                    <form method="POST" action="{{ route('products.destroy', $product) }}" class="inline">
+                    <a href="{{ route('provider.products.edit', $product->id) }}"
+                       class="text-blue-600 hover:underline">
+                        Edit
+                    </a>
+
+                    <form method="POST"
+                          action="{{ route('provider.products.destroy', $product->id) }}"
+                          class="inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Delete this product?')"
-                                class="text-red-600 hover:underline">Delete</button>
+                        <button type="submit"
+                                onclick="return confirm('Delete this product?')"
+                                class="text-red-600 hover:underline">
+                            Delete
+                        </button>
                     </form>
                 </td>
             </tr>

@@ -31,10 +31,7 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('products', 'public');
-        }
+        $imagePath = $request->hasFile('image') ? $request->file('image')->store('products', 'public') : null;
 
         Product::create([
             'name' => $request->name,
@@ -45,18 +42,26 @@ class ProductController extends Controller
             'created_by' => Auth::id(),
         ]);
 
-        return redirect()->route('products.index')->with('success', 'Product added successfully!');
+        return redirect()->route('provider.products.index')
+                         ->with('success', 'Product added successfully!');
     }
 
     public function edit(Product $product)
     {
-        $this->authorize('update', $product); // optional policy check
+        // ✅ Simple ownership check instead of authorize()
+        if ($product->created_by != Auth::id()) {
+            abort(403, 'You do not own this product.');
+        }
+
         return view('provider.products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
     {
-        $this->authorize('update', $product);
+        // ✅ Simple ownership check instead of authorize()
+        if ($product->created_by != Auth::id()) {
+            abort(403, 'You do not own this product.');
+        }
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -78,16 +83,21 @@ class ProductController extends Controller
             'price' => $request->price,
         ]);
 
-        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+        return redirect()->route('provider.products.index')
+                         ->with('success', 'Product updated successfully!');
     }
 
     public function destroy(Product $product)
     {
-        $this->authorize('delete', $product);
+        // ✅ Simple ownership check instead of authorize()
+        if ($product->created_by != Auth::id()) {
+            abort(403, 'You do not own this product.');
+        }
 
         if ($product->image) Storage::disk('public')->delete($product->image);
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+        return redirect()->route('provider.products.index')
+                         ->with('success', 'Product deleted successfully!');
     }
 }
