@@ -3,65 +3,37 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RedirectController;
 
-/*
-|--------------------------------------------------------------------------
-| Admin Controllers
-|--------------------------------------------------------------------------
-*/
+//Admin Controllers
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\ProviderController;
 
-/*
-|--------------------------------------------------------------------------
-| Provider Controllers
-|--------------------------------------------------------------------------
-*/
+//Provider Controllers
 use App\Http\Controllers\Provider\DashboardController;
 use App\Http\Controllers\Provider\ProductController as ProviderProductController;
 use App\Http\Controllers\Provider\OrderController as ProviderOrderController;
 
-/*
-|--------------------------------------------------------------------------
-| Customer Controllers
-|--------------------------------------------------------------------------
-*/
+//Customer Controllers
 use App\Http\Controllers\Customer\ProductController as CustomerProductController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\ProfileController;
 use App\Http\Controllers\Customer\OrderController as CustomerOrderController;
 
-/*
-|--------------------------------------------------------------------------
-| Livewire Components
-|--------------------------------------------------------------------------
-*/
+//Livewire Components
 use App\Livewire\CartPage;
 use App\Livewire\CheckoutPage;
 
-/*
-|--------------------------------------------------------------------------
-| Public Routes
-|--------------------------------------------------------------------------
-*/
+//Public Routes
 Route::get('/', function () {
     return view('welcome');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Redirect After Login
-|--------------------------------------------------------------------------
-*/
+//Redirect After Login
 Route::get('/redirect', [RedirectController::class, 'index'])
     ->middleware('auth')
     ->name('redirect');
 
-/*
-|--------------------------------------------------------------------------
-| Customer Routes
-|--------------------------------------------------------------------------
-*/
+//Customer Routes
 Route::prefix('customer')
     ->middleware(['auth', 'role:customer'])
     ->group(function () {
@@ -100,11 +72,7 @@ Route::prefix('customer')
             ->name('customer.profile.update');
     });
 
-/*
-|--------------------------------------------------------------------------
-| Provider Routes
-|--------------------------------------------------------------------------
-*/
+//Provider Routes
 Route::prefix('provider')
     ->middleware(['auth', 'role:provider'])
     ->group(function () {
@@ -136,11 +104,7 @@ Route::prefix('provider')
             ->name('provider.orders');
     });
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-*/
+//Admin Routes
 Route::prefix('admin')->group(function () {
 
     Route::get('/login', [LoginController::class, 'showLoginForm'])
@@ -170,11 +134,7 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-/*
-|--------------------------------------------------------------------------
-| Jetstream Default Dashboard (Fallback)
-|--------------------------------------------------------------------------
-*/
+//Jetstream Default Dashboard (Fallback)
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
