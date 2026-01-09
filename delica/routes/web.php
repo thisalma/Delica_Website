@@ -102,6 +102,11 @@ Route::prefix('provider')
         // Orders
         Route::get('/orders', [ProviderOrderController::class, 'index'])
             ->name('provider.orders');
+
+            // Orders detail
+Route::get('/orders/{order}', [ProviderOrderController::class, 'show'])
+    ->name('provider.orders.show');
+
     });
 
 //Admin Routes
