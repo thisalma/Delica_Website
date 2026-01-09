@@ -25,9 +25,7 @@
             <a href="#" class="px-4 py-2 rounded hover:bg-pink-500">
                 Providers
             </a>
-            <a href="#" class="px-4 py-2 rounded hover:bg-pink-500">
-                Orders
-            </a>
+            
         </nav>
 
         <div class="mt-auto">

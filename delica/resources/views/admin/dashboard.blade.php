@@ -26,9 +26,6 @@
             <a href="{{ url('/admin/providers') }}" class="px-4 py-2 rounded hover:bg-pink-500 transition">
                 Providers
             </a>
-            <a href="{{ url('/admin/orders') }}" class="px-4 py-2 rounded hover:bg-pink-500 transition">
-                Orders
-            </a>
         </nav>
 
         <!-- Logout -->
@@ -51,7 +48,7 @@
         </h1>
 
         <!-- Top Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <a href="{{ url('/admin/customers') }}"
                class="block bg-white p-6 rounded-xl shadow text-center hover:shadow-lg transition">
                 <h3 class="text-xl font-bold mb-2">Customers</h3>
@@ -62,12 +59,6 @@
                class="block bg-white p-6 rounded-xl shadow text-center hover:shadow-lg transition">
                 <h3 class="text-xl font-bold mb-2">Providers</h3>
                 <p class="text-gray-600">Manage providers</p>
-            </a>
-
-            <a href="{{ url('/admin/orders') }}"
-               class="block bg-white p-6 rounded-xl shadow text-center hover:shadow-lg transition">
-                <h3 class="text-xl font-bold mb-2">Orders</h3>
-                <p class="text-gray-600">Monitor all orders</p>
             </a>
         </div>
 
