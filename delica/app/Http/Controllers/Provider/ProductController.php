@@ -48,7 +48,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        // ✅ Simple ownership check instead of authorize()
+        // Simple ownership check instead of authorize()
         if ($product->created_by != Auth::id()) {
             abort(403, 'You do not own this product.');
         }
@@ -58,7 +58,7 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        // ✅ Simple ownership check instead of authorize()
+        //  Simple ownership check instead of authorize()
         if ($product->created_by != Auth::id()) {
             abort(403, 'You do not own this product.');
         }
@@ -89,7 +89,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        // ✅ Simple ownership check instead of authorize()
+        // Simple ownership check instead of authorize()
         if ($product->created_by != Auth::id()) {
             abort(403, 'You do not own this product.');
         }

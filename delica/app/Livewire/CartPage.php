@@ -46,7 +46,7 @@ class CartPage extends Component
 
     public function render()
     {
-        // ✅ Load items WITH product
+        // Load items WITH product
         $items = $this->cart->items()->with('product')->get();
 
         $total = $items->sum(fn ($item) =>

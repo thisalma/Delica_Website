@@ -27,7 +27,7 @@ class CheckoutPage extends Component
                 ->with('error', 'Please complete your profile before checkout.');
         }
 
-        // ✅ Load the user's cart items with product
+        // Load the user's cart items with product
         $cart = $user->cart;
 
         if (!$cart || $cart->items()->count() === 0) {
@@ -51,12 +51,12 @@ class CheckoutPage extends Component
         $user = Auth::user();
 
         if (!$this->items || $this->items->isEmpty()) {
-            // ✅ Livewire v3: dispatch browser event instead of emit
+            // Livewire v3: dispatch browser event instead of emit
             $this->dispatch('order-error', ['message' => 'Your cart is empty!']);
             return;
         }
 
-        // ✅ Create the order with order_date
+        // Create the order with order_date
         $order = Order::create([
             'user_id' => $user->id,
             'total_amount' => $this->subtotal + $this->deliveryFee,
@@ -65,7 +65,7 @@ class CheckoutPage extends Component
             'order_date' => Carbon::now(), // <-- Fix for order_date error
         ]);
 
-        // ✅ Create order items
+        // Create order items
         foreach ($this->items as $item) {
             OrderItem::create([
                 'order_id' => $order->id,
@@ -75,12 +75,12 @@ class CheckoutPage extends Component
             ]);
         }
 
-        // ✅ Remove cart items (not the cart)
+        // Remove cart items (not the cart)
         if ($user->cart) {
             $user->cart->items()->delete();
         }
 
-        // ✅ Dispatch success message for Livewire v3
+        // Dispatch success message for Livewire v3
         $this->dispatch('order-placed', ['message' => 'Your order has been successfully placed! 🎉']);
 
         // Reset payment method and subtotal
